@@ -1,0 +1,3 @@
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}You have been invited for an audition{% endblocktrans %}
+{% endautoescape %}

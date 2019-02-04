@@ -1,0 +1,11 @@
+site_name: castjunction
+site_description: Casting Platform.
+repo_url: https://github.com/morsefactory/ cast-core
+site_dir: site
+copyright: Copyright &copy; 2015, <a href="https://github.com/morsefactory">morsefactory</a>.
+
+pages:
+  - Home: 'index.md'
+  - API:
+    - Authentication: 'api/authentication.md'
+    - Users: 'api/users.md'

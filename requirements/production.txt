@@ -1,0 +1,20 @@
+# Dependencies related to deploying  cast-core
+-r base.txt
+
+# WSGI Handler
+gevent==1.1.1
+gunicorn==19.3.0
+
+# Static and Media Storage
+django-storages-redux==1.2.3
+
+# Caching
+hiredis==0.2.0
+django-redis-cache==1.6.5
+
+# Django-secure
+django-secure==1.0.1
+
+# App Monitoring
+newrelic==2.50.0.39
+setproctitle==1.1.9

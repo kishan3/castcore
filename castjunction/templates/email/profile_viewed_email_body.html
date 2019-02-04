@@ -1,0 +1,57 @@
+{% load i18n %}{% autoescape off %}
+<!doctype html>
+<html>
+<head>
+  <title>{% blocktrans %}Profile Viewed {% endblocktrans %}</title>
+</head>
+<body>
+
+  <div class="mainContainer" style="max-width:600px; margin:0px auto; text-align:center">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td width="100%" class="pattern">
+          <table width="100%" cellpadding="0" cellspacing="0">
+
+            <tr>
+                  <tr>
+                    <td valign="top" align="left" style="margin-bottom:20px;">
+                      Congratulations <strong>{{ first_name }}!,</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                      <td valign="top" align="left" style="line-height: 25px; color: #666;">
+                      Your profile has been viewed in relation to the following opportunity :
+
+                      </td>
+                      </tr>
+                  <tr>
+                    <td valign="top" align="center" style="display: block; margin-top:10px; margin-right:0; margin-bottom:10px; margin-left:0;">
+                      <a href="http://{{ url }}" target="_blank">JOB </a>
+                    </td>
+
+
+                  </tr>
+                  <tr>
+                      <td valign="top" align="left" style="line-height: 25px; color: #666;">
+                       We'll keep you posted in case there is any updates on your application.
+                       </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" align="left" valign="top">
+                        Regards, <br>
+                        Team - StageRoute <br>
+                    </td>
+                  </tr>
+                </td>
+              </tr>
+
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</body>
+</html>
+{% endautoescape %}

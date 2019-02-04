@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://www.stageroute.com/favicon.ico">
+    <title>Payment Link generate for StageRoute</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <!-- Custom styles for this template -->
+    <style type="text/css">
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #eee;
+    }
+
+    .form-signin, #copy-link {
+        max-width: 630px;
+        padding: 15px;
+        margin: 0 auto;
+    }
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+    }
+
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .form-signin .form-control:focus {
+        z-index: 2;
+    }
+
+    .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    .form-signin .select2-selection.select2-selection--single{
+        height: 42px;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: .25rem;
+        padding-top: 5px;
+    }
+    .form-signin .select2-container--default .select2-selection--single .select2-selection__arrow{
+        height:35px;
+    }
+    #copy-link{
+        display: none;
+    }
+    #copy-input{
+        width: 80%;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-signin">
+            <h2 class="form-signin-heading">Generate Payment link for User</h2>
+            <div class="form-group">
+                <input type="email" id="username" name='username' class="form-control" placeholder="Email address" required="" autofocus="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control form-control-lg" id="full_name" placeholder="full name" name="full_name">
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <input type="number" id="phone" name='phone' class="form-control" placeholder="Phone" required="">
+                </div>
+                <div class="col-md-6">
+                    <select name="gender" id="gender" class="select_select2 form-control " style="width: 100%">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <select name="package" id="package" class="select_select2 form-control " style="width: 100%">
+                        <option value="">Select Package</option>
+
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-lg btn-outline-primary btn-block" type="submit">Generate payment Link</button>
+        </form>
+        <form class="form-checkuser">
+            <input type="hidden" id="username-copy" name='email' class="form-control">
+        </form>
+        <input type="hidden" id="token" class="form-control">
+
+        <div id='copy-link'>
+            <input id="copy-input"></input>
+            <button id="copy-button" class="btn btn-sm btn-outline-primary">Copy</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Cookies.js/1.2.1/cookies.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.3.8/packaged/jquery.noty.packaged.min.js"></script>
+    <script type="text/javascript" src='http://www.stageroute.com/js/main.js'></script>
+    <!-- <script type="text/javascript" src='http://dev-dot-stage-1329.appspot.com/js/main.js'></script>-->
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $.BASE_URL = 'http://api.stageroute.com/api/';
+            var validationrules = {
+              rules: {
+                username: {
+                  required: true,
+                  email: true,
+                  minlength: 3
+                },
+                full_name: {
+                  required: true,
+                  minlength: 3
+                },
+                gender: {
+                  required: true
+                },
+                phone: {
+                  required: true,
+                  minlength:10,
+                  maxlength:10,
+                  number: true
+                }
+              }
+            };
+            var $validator = $(".form-signin").validate(validationrules);
+
+            $( "#username" ).blur(function() {
+              $('#copy-link').hide();
+              $('#username-copy').val($(this).val());
+              $( "#username" ).removeClass('form-control-success').parent().removeClass('has-success');
+              $('#token').val('');
+              $('.form-signin .form-group').removeAttr("disabled");
+              $('#gender').attr('disabled', false);
+
+              $.makeFormRequestWithAuth("/check-user/?email="+$(this).val(),
+                'post',
+                $('.form-checkuser'),
+                null,
+                function(response){
+                  $( "#username" ).addClass('form-control-success').parent().addClass('has-success');
+                  $('#token').val(response.token);
+                  $('.form-signin .form-group input').attr('disabled', 'disabled');
+                  $('#gender').attr('disabled', true);
+                  $( "#username" ).removeAttr("disabled");
+                },
+                null,
+                {}
+              );
+            });
+
+            $.makeFormRequestWithAuth("/api/products/",
+                'get',
+                null,
+                null,
+                function(response){
+                  console.log(response);
+                  var products = [];
+                  var product;
+                  for (productIndex in response.results) {
+                    var product = response.results[ productIndex ];
+                    var product_name = product.title+' ( Rs.'+product.price.incl_tax+' )';
+                    products.push({
+                      id:product.id,
+                      text:product_name
+                      });
+                  }
+
+                  $('#package').select2({data:products});
+                  $('#package').val($('#package').data('val')).trigger('change');
+
+                },
+                null,
+                {}
+            );
+
+            var validatorOpti = function (form_selector, validator){
+                var $valid = $(form_selector).valid();
+                if(!$valid) {
+                    // ga('send', 'event', 'Register', 'Not Valid', 'Next', 1);
+                    validator.focusInvalid();
+                    return false;
+                }
+                // ga('send', 'event', 'Register', 'Valid', 'Next', 1);
+                return true;
+            }
+
+            $('.form-signin').submit(function(event){
+                event.preventDefault();
+                var token = $('#token').val();
+                if (token === ''){
+                    var valid = validatorOpti('.form-signin', $validator);
+                    if (!valid){
+                        $('#copy-link').hide();
+                        return false;
+                    }
+
+                    $.makeFormRequest('/rest-auth/registration/',
+                                    'post',
+                                    '.form-signin',
+                                    $validator,
+                                    function(response){
+                                        //Cookies.set('token', response.key);
+                                        var link = 'http://stageroute.com/direct-payment?token='+response.key+'&product_id='+$('#package').val();
+                                        $('#copy-input').val(link);
+                                        $('#copy-link').show();
+                                    },
+                                    null,
+                                    {'account_type':'talent'}
+                                    );
+
+                } else{
+                    var link = 'http://stageroute.com/direct-payment?token='+token+'&product_id='+$('#package').val();
+                    $('#copy-input').val(link);
+                    $('#copy-link').show();
+
+                }
+
+            });
+
+
+              // When the copy button is clicked, select the value of the text box, attempt
+              // to execute the copy command, and trigger event to update tooltip message
+              // to indicate whether the text was successfully copied.
+              $('#copy-button').bind('click', function(event) {
+                event.preventDefault();
+                var input = document.querySelector('#copy-input');
+                input.setSelectionRange(0, input.value.length + 1);
+                document.execCommand('copy');
+
+              });
+
+        });
+
+    </script>
+</body>
+
+</html>

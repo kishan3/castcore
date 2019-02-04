@@ -1,0 +1,7 @@
+{{ object.title }}
+{{ object.role_position }}
+{{ object.min_age }}
+{{ object.max_age  }}
+{{ object.min_budget }}
+{{ object.max_budget }}
+{{ object.location }}

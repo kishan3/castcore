@@ -1,0 +1,2 @@
+{{ object.degree }}
+{{ object.field_of_study }}
