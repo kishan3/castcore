@@ -3,7 +3,7 @@
 
 # WSGI Handler
 gevent==1.1.1
-gunicorn==19.3.0
+gunicorn==19.9.0
 
 # Static and Media Storage
 django-storages-redux==1.2.3
