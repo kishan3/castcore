@@ -1,14 +1,10 @@
-# cast-core
-[![Build Status](https://travis-ci.org/morsefactory/ cast-core.svg?branch=master)](https://travis-ci.org/morsefactory/ cast-core)
+# castcore
+A backend for an online auditioning app. Django Rest Framework backend which provides REST APIs to front end clients.
 
-Casting Platform.. Check out the project's [documentation](http://morsefactory.github.io/ cast-core/).
-
-# Prerequisites
+## Prerequisites
 - [virtualenv](https://virtualenv.pypa.io/en/latest/)
 - [postgresql](http://www.postgresql.org/)
 - [redis](http://redis.io/)
-- [travis cli](http://blog.travis-ci.com/2013-01-14-new-client/)
-- [heroku toolbelt](https://toolbelt.heroku.com/)
 - install postgres: 
 
   sudo apt-get install postgresql
@@ -18,7 +14,7 @@ Casting Platform.. Check out the project's [documentation](http://morsefactory.g
   sudo apt-get install libjpeg-dev
   sudo apt-get install libffi-dev
 
-# Initialize the project
+## Initialize the project
 Create and activate a virtualenv:
 
 ```bash
