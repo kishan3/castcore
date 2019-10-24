@@ -116,7 +116,7 @@ traitlets==4.2.1
 Unidecode==1.0.23
 
 whichcraft==0.3.1
-Werkzeug==0.11.9
+Werkzeug==0.15.3
 drfdocs==0.0.9
 django-hstore==1.4.2
 django-cors-headers==1.1.0
