@@ -71,7 +71,7 @@ greenlet==0.4.9
 idna==2.5
 ipython-genutils==0.1.0
 
-Jinja2==2.8
+Jinja2==2.11.3
 jinja2-time==0.1.0
 
 livereload==2.4.1
