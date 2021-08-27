@@ -2,17 +2,16 @@
 A backend for an online auditioning app. Django Rest Framework backend which provides REST APIs to front end clients.
 
 ## Prerequisites
-- [virtualenv](https://virtualenv.pypa.io/en/latest/)
-- [postgresql](http://www.postgresql.org/)
-- [redis](http://redis.io/)
-- install postgres: 
-
-  sudo apt-get install postgresql
-  sudo apt-get install python3-dev
-  sudo apt-get install python-psycopg2
-  sudo apt-get install libpq-dev
-  sudo apt-get install libjpeg-dev
-  sudo apt-get install libffi-dev
+- [Virtualenv](https://virtualenv.pypa.io/en/latest/)
+- [Postgresql](http://www.postgresql.org/)
+- [Redis](http://redis.io/)
+- Install Postgresql database:
+   - sudo apt-get install postgresql
+   - sudo apt-get install python3-dev
+   - sudo apt-get install python-psycopg2
+   - sudo apt-get install libpq-dev
+   - sudo apt-get install libjpeg-dev
+   - sudo apt-get install libffi-dev
 
 ## Initialize the project
 Create and activate a virtualenv:
