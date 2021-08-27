@@ -7,7 +7,6 @@ from ..serializers import RegisterSerializer
 
 
 class TestRegisterSerializer(TestCase):
-
     def setUp(self):
         self.user_data = model_to_dict(UserFactory.build())
 
@@ -24,4 +23,4 @@ class TestRegisterSerializer(TestCase):
         ok_(serializer.is_valid())
 
         user = serializer.save()
-        ok_(check_password(self.user_data.get('password'), user.password))
+        ok_(check_password(self.user_data.get("password"), user.password))

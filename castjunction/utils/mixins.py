@@ -28,8 +28,8 @@ class StatusFieldMixin(models.Model):
 class CommonFieldsMixin(TimeFieldsMixin, StatusFieldMixin):
     """Mixin containing common fields to be added in all models."""
 
-    title = models.CharField(max_length=500, db_index=True, verbose_name='Title')
-    description = models.TextField(null=True, blank=True, verbose_name='Description')
+    title = models.CharField(max_length=500, db_index=True, verbose_name="Title")
+    description = models.TextField(null=True, blank=True, verbose_name="Description")
 
     def __str__(self):
         """String representation."""

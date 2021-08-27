@@ -3,7 +3,10 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from push_notifications.api.rest_framework import GCMDeviceSerializer, DeviceViewSetMixin
+from push_notifications.api.rest_framework import (
+    GCMDeviceSerializer,
+    DeviceViewSetMixin,
+)
 from push_notifications.models import GCMDevice
 
 

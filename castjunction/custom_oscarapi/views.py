@@ -9,7 +9,7 @@ from oscar.core.loading import get_model
 from oscarapi import serializers as oscarapi_serializers
 from .serializers import ProductSerializer, CheckoutSerializer, OrderSerializer
 
-Product = get_model('catalogue', 'Product')
+Product = get_model("catalogue", "Product")
 
 
 class ProductList(basic.ProductList):
@@ -17,11 +17,11 @@ class ProductList(basic.ProductList):
     permission_classes = (AllowAny,)
     # TODO: order products by price_incl_tax
     filter_backends = (filters.OrderingFilter,)
-    ordering_fields = ('stockrecords',)
-    ordering = ('stockrecords__price_excl_tax')
+    ordering_fields = ("stockrecords",)
+    ordering = "stockrecords__price_excl_tax"
 
     def get_serializer_class(self, *args, **kwargs):
-        if self.request.method == 'GET':
+        if self.request.method == "GET":
             return ProductSerializer
         else:
             return oscarapi_serializers.ProductLinkSerializer
@@ -33,7 +33,6 @@ class CheckoutView(checkout.CheckoutView):
 
 
 class ClearBasketView(generics.GenericAPIView):
-
     def post(self, request, *args, **kwargs):
         """Get user's basket and delete its lines."""
         basket = request.user.baskets.last()

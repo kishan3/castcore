@@ -19,27 +19,42 @@ class ImageSerializer(serializers.ModelSerializer):
     """Image serializer."""
 
     image_type = ChoicesField(choices=choices.MEDIA_TYPE_CHOICES)
-    thumbnail = serializers.FileField(source='thumbnail_150x150', read_only=True)
+    thumbnail = serializers.FileField(source="thumbnail_150x150", read_only=True)
     thumbnail_200x200 = serializers.FileField(read_only=True)
 
     class Meta:
         """Meta."""
 
         model = Image
-        fields = ('id', 'title', 'image', 'thumbnail', 'thumbnail_200x200', 'is_private', 'image_type')
+        fields = (
+            "id",
+            "title",
+            "image",
+            "thumbnail",
+            "thumbnail_200x200",
+            "is_private",
+            "image_type",
+        )
 
 
 class VideoSerializer(serializers.ModelSerializer):
     """Video serializer."""
 
     video_type = ChoicesField(choices=choices.MEDIA_TYPE_CHOICES)
-    thumbnail = serializers.FileField(source='video_thumbnail', read_only=True)
+    thumbnail = serializers.FileField(source="video_thumbnail", read_only=True)
 
     class Meta:
         """Meta."""
 
         model = Video
-        fields = ('id', 'title', 'video', 'video_type', 'thumbnail', 'is_private',)
+        fields = (
+            "id",
+            "title",
+            "video",
+            "video_type",
+            "thumbnail",
+            "is_private",
+        )
 
 
 class AudioSerializer(serializers.ModelSerializer):
@@ -47,4 +62,10 @@ class AudioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Audio
-        fields = ('id', 'title', 'audio', 'audio_type', 'is_private',)
+        fields = (
+            "id",
+            "title",
+            "audio",
+            "audio_type",
+            "is_private",
+        )

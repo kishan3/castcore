@@ -1,5 +1,6 @@
 """Custom Backend for login using phone number and email."""
 from django.contrib.auth import get_user_model
+
 # from django.contrib.auth.models import check_password
 from rest_framework.exceptions import NotFound, AuthenticationFailed
 
@@ -13,10 +14,10 @@ class CustomAuthBackend(object):
         try:
             if email:
                 user = my_user_model.objects.get(email=email)
-            elif kwargs.get('username'):
-                user = my_user_model.objects.get(email=kwargs.get('username'))
+            elif kwargs.get("username"):
+                user = my_user_model.objects.get(email=kwargs.get("username"))
             elif kwargs.get("phone"):
-                user = my_user_model.objects.get(phone=kwargs.get('phone'))
+                user = my_user_model.objects.get(phone=kwargs.get("phone"))
         except my_user_model.DoesNotExist:
             raise NotFound("user does not exist.")
         except Exception as e:

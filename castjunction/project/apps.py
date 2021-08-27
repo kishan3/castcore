@@ -3,12 +3,13 @@ from django.apps import AppConfig
 
 
 class ProjectConfig(AppConfig):
-    name = 'project'
+    name = "project"
 
     def ready(self):
         from actstream import registry
         from .signals import incentive_for_job_approved
-        registry.register(self.get_model('Job'))
+
+        registry.register(self.get_model("Job"))
 
         import django_rq
         from messaging.scheduled_tasks import broadcast_approved_jobs
@@ -20,5 +21,5 @@ class ProjectConfig(AppConfig):
         scheduler.cron(
             cron_string="30 4 * * *",
             func=broadcast_approved_jobs,  # Function to be queued
-            queue_name=scheduler.queue_name
+            queue_name=scheduler.queue_name,
         )

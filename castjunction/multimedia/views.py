@@ -34,35 +34,38 @@ class JobUploadViewSet(object):
 
 
 class JobImageUploadViewSet(
-        JobUploadViewSet,
-        mixins.CreateModelMixin,
-        mixins.ListModelMixin,
-        mixins.RetrieveModelMixin,
-        viewsets.GenericViewSet):
+    JobUploadViewSet,
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
     """CRUD operations on Image."""
 
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
     def create(self, request, *args, **kwargs):
         """Create Image object when job uploads."""
         job = self._get_job(kwargs.get("job_id"))
-        image = request.FILES.get('image')
+        image = request.FILES.get("image")
         if not image:
             raise ValidationError("Image is required to upload.")
-        request.data.update({'title': image.name})
+        request.data.update({"title": image.name})
         verify_image(image)
-        if not request.data.get('image_type'):
-            request.data['image_type'] = 'Generic'
+        if not request.data.get("image_type"):
+            request.data["image_type"] = "Generic"
         if job.images.count() == 0:
-            request.data['image_type'] = 'Primary'
+            request.data["image_type"] = "Primary"
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        serializer.validated_data.update({
-            'content_object': job,
-        })
+        serializer.validated_data.update(
+            {
+                "content_object": job,
+            }
+        )
         try:
             image = Image.objects.create(**serializer.validated_data)
         except Exception as e:
@@ -102,16 +105,17 @@ class UploadViewSet(object):
 
 
 class ImageUploadViewSet(
-        UploadViewSet,
-        mixins.CreateModelMixin,
-        mixins.ListModelMixin,
-        mixins.RetrieveModelMixin,
-        mixins.UpdateModelMixin,
-        mixins.DestroyModelMixin,
-        viewsets.GenericViewSet):
+    UploadViewSet,
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet,
+):
     """CRUD operations on Image."""
 
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
@@ -123,21 +127,23 @@ class ImageUploadViewSet(
     def create(self, request, *args, **kwargs):
         """Create Image object when user uploads."""
         user = self._get_user(kwargs.get("user_id"))
-        image = request.FILES.get('image')
+        image = request.FILES.get("image")
         if not image:
             raise ValidationError("Image is required to upload.")
-        request.data.update({'title': image.name})
+        request.data.update({"title": image.name})
         verify_image(image)
-        if not request.data.get('image_type'):
-            request.data['image_type'] = 'Generic'
+        if not request.data.get("image_type"):
+            request.data["image_type"] = "Generic"
         if user.images.count() == 0:
-            request.data['image_type'] = 'Primary'
+            request.data["image_type"] = "Primary"
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        serializer.validated_data.update({
-            'content_object': user,
-        })
+        serializer.validated_data.update(
+            {
+                "content_object": user,
+            }
+        )
         try:
             image = Image.objects.create(**serializer.validated_data)
         except Exception as e:
@@ -163,7 +169,7 @@ class ImageUploadViewSet(
 class VideoUploadViewSet(UploadViewSet, viewsets.ModelViewSet):
     """CRUD operations on Video."""
 
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
 
@@ -175,18 +181,20 @@ class VideoUploadViewSet(UploadViewSet, viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """Create Video object when user uploads."""
         user = self._get_user(kwargs.get("user_id"))
-        video = request.FILES.get('video')
+        video = request.FILES.get("video")
         if not video:
             raise ValidationError("Video is required to upload.")
-        request.data.update({'title': video.name})
+        request.data.update({"title": video.name})
         verify_video(video)
-        if not request.data.get('video_type'):
-            request.data['video_type'] = choices.GENERIC
+        if not request.data.get("video_type"):
+            request.data["video_type"] = choices.GENERIC
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.validated_data.update({
-            'content_object': user,
-        })
+        serializer.validated_data.update(
+            {
+                "content_object": user,
+            }
+        )
 
         try:
             video = Video.objects.create(**serializer.validated_data)
@@ -197,8 +205,11 @@ class VideoUploadViewSet(UploadViewSet, viewsets.ModelViewSet):
                 subprocess.call(ffmpeg, shell=True)
             except Exception as e:
                 raise e
-            temp_file = open("{0}/thumb01.jpg".format(thumbnail_path), 'rb')
-            video.video_thumbnail.save("thumb_for_{0}.jpg".format(video.title.split('.')[0]), ImageFile(temp_file))
+            temp_file = open("{0}/thumb01.jpg".format(thumbnail_path), "rb")
+            video.video_thumbnail.save(
+                "thumb_for_{0}.jpg".format(video.title.split(".")[0]),
+                ImageFile(temp_file),
+            )
             os.remove("{0}/thumb01.jpg".format(thumbnail_path))
         except Exception as e:
             raise e
@@ -235,18 +246,20 @@ class AudioUploadViewSet(UploadViewSet, viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """Upload videos."""
         user = self._get_user(kwargs.get("user_id"))
-        audio = request.FILES.get('audio')
+        audio = request.FILES.get("audio")
         if not audio:
             raise ValidationError("Audio is required to upload.")
         verify_audio(audio)
-        if not request.data.get('audio_type'):
-            request.data['audio_type'] = choices.GENERIC
-        request.data.update({'title': audio.name})
+        if not request.data.get("audio_type"):
+            request.data["audio_type"] = choices.GENERIC
+        request.data.update({"title": audio.name})
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.validated_data.update({
-            'content_object': user,
-        })
+        serializer.validated_data.update(
+            {
+                "content_object": user,
+            }
+        )
 
         try:
             audio = Audio.objects.create(**serializer.validated_data)

@@ -2,29 +2,30 @@
 
 
 # Gender
-MALE = 'M'
-FEMALE = 'F'
-OTHER = 'O'
+MALE = "M"
+FEMALE = "F"
+OTHER = "O"
 NOT_SPECIFIED = "NS"
 GENDER_CHOICES = (
-    (MALE, 'Male'),
-    (FEMALE, 'Female'),
-    (OTHER, 'Other'),
-    (NOT_SPECIFIED, 'Not_specified')
+    (MALE, "Male"),
+    (FEMALE, "Female"),
+    (OTHER, "Other"),
+    (NOT_SPECIFIED, "Not_specified"),
 )
 
 # Job state
-DRAFT = 'DR'
-PENDING_APPROVAL = 'PA'
-APPROVED = 'A'
-REMOVED = 'R'
-CLOSED = 'C'
+DRAFT = "DR"
+PENDING_APPROVAL = "PA"
+APPROVED = "A"
+REMOVED = "R"
+CLOSED = "C"
 JOB_STATE_CHOICES = (
-    (DRAFT, 'Draft'),
-    (PENDING_APPROVAL, 'Unapproved'),
-    (APPROVED, 'Approved'),
-    (REMOVED, 'Removed'),
-    (CLOSED, 'Closed'),)
+    (DRAFT, "Draft"),
+    (PENDING_APPROVAL, "Unapproved"),
+    (APPROVED, "Approved"),
+    (REMOVED, "Removed"),
+    (CLOSED, "Closed"),
+)
 
 
 # JOB TYPES
@@ -48,25 +49,25 @@ JOB_TYPE_CHOICES = (
 )
 
 # Media Type
-PRIMARY = 'P'
-GENERIC = 'G'
-COVER = 'C'
+PRIMARY = "P"
+GENERIC = "G"
+COVER = "C"
 
 MEDIA_TYPE_CHOICES = (
-    (PRIMARY, 'Primary'),
-    (GENERIC, 'Generic'),
-    (COVER, 'Cover'),
+    (PRIMARY, "Primary"),
+    (GENERIC, "Generic"),
+    (COVER, "Cover"),
 )
 
 # Profile States
-PUBLIC = 'PB'
-PRIVATE = 'PR'
-DISABLED = 'DA'
+PUBLIC = "PB"
+PRIVATE = "PR"
+DISABLED = "DA"
 
 PROFILE_STATE_CHOICES = (
-    (PUBLIC, 'public'),
-    (PRIVATE, 'private'),
-    (DISABLED, 'disabled'),
+    (PUBLIC, "public"),
+    (PRIVATE, "private"),
+    (DISABLED, "disabled"),
 )
 
 
@@ -150,31 +151,29 @@ HAIR_COLOR_CHOICES = (
 )
 # body types
 
-SKINNY = 'skinny'
-BULKY = 'bulky'
-SLIM = 'slim'
-ATHLETIC = 'athletic'
-MUSCULAR = 'muscular'
-CURVY = 'curvy'
-HEAVY = 'heavy'
-VERY_HEAVY = 'very_heavy'
-VERY_FAT = 'very_fat'
+SKINNY = "skinny"
+BULKY = "bulky"
+SLIM = "slim"
+ATHLETIC = "athletic"
+MUSCULAR = "muscular"
+CURVY = "curvy"
+HEAVY = "heavy"
+VERY_HEAVY = "very_heavy"
+VERY_FAT = "very_fat"
 
 BODY_TYPES = (
     # common
-    (SKINNY, 'skinny'),
-    (SLIM, 'slim'),
-    (ATHLETIC, 'athletic'),
-    (MUSCULAR, 'muscular'),
-    (HEAVY, 'heavy'),
-
+    (SKINNY, "skinny"),
+    (SLIM, "slim"),
+    (ATHLETIC, "athletic"),
+    (MUSCULAR, "muscular"),
+    (HEAVY, "heavy"),
     # male
-    (BULKY, 'bulky'),
-    (VERY_FAT, 'very_fat'),
-
+    (BULKY, "bulky"),
+    (VERY_FAT, "very_fat"),
     # female
-    (CURVY, 'curvy'),
-    (VERY_HEAVY, 'very_heavy'),
+    (CURVY, "curvy"),
+    (VERY_HEAVY, "very_heavy"),
     (DOES_NOT_MATTER, "does_not_matter"),
 )
 
@@ -206,16 +205,16 @@ HAIR_STYLE_CHOICES = (
 )
 
 # Languages
-ENGLISH = 'english'
-HINDI = 'hindi'
-GUJARATI = 'gujarati'
-BENGALI = 'bengali'
+ENGLISH = "english"
+HINDI = "hindi"
+GUJARATI = "gujarati"
+BENGALI = "bengali"
 
 LANGUAGE_CHOICES = (
-    (ENGLISH, 'english'),
-    (HINDI, 'hindi'),
-    (GUJARATI, 'gujarati'),
-    (BENGALI, 'bengali'),
+    (ENGLISH, "english"),
+    (HINDI, "hindi"),
+    (GUJARATI, "gujarati"),
+    (BENGALI, "bengali"),
     (DOES_NOT_MATTER, "does_not_matter"),
 )
 
@@ -232,11 +231,11 @@ AUDITION_TYPE_CHOICES = (
     (DIGITAL, "digital"),
 )
 
-TALENT = 'talent'
-AGENT = 'agent'
-DIRECTOR = 'director'
+TALENT = "talent"
+AGENT = "agent"
+DIRECTOR = "director"
 APP_TYPE_CHOICES = (
-    (TALENT, 'talent'),
-    (DIRECTOR, 'director'),
-    (AGENT, 'agent'),
+    (TALENT, "talent"),
+    (DIRECTOR, "director"),
+    (AGENT, "agent"),
 )

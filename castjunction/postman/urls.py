@@ -93,29 +93,58 @@ from django.conf.urls import url
 from django.views.generic.base import RedirectView
 
 from . import OPTIONS
-from .views import (InboxView, SentView, ArchivesView, TrashView,
-                    WriteView, ReplyView, MessageView, ConversationView,
-                    ArchiveView, DeleteView, UndeleteView,)
+from .views import (
+    InboxView,
+    SentView,
+    ArchivesView,
+    TrashView,
+    WriteView,
+    ReplyView,
+    MessageView,
+    ConversationView,
+    ArchiveView,
+    DeleteView,
+    UndeleteView,
+)
 
 from .api import InboxAPIView, WriteAPIView, ReplyAPIView, ConversationAPIView
 
 urlpatterns = [
-    url(r'^sent/(?:(?P<option>'+OPTIONS+')/)?$', SentView.as_view(), name='sent'),
-    url(r'^archives/(?:(?P<option>'+OPTIONS+')/)?$', ArchivesView.as_view(), name='archives'),
-    url(r'^trash/(?:(?P<option>'+OPTIONS+')/)?$', TrashView.as_view(), name='trash'),
-    url(r'^write/(?:(?P<recipients>[^/#]+)/)?$', WriteView.as_view(), name='write'),
-    url(r'^reply/(?P<message_id>[\d]+)/$', ReplyView.as_view(), name='reply'),
-    url(r'^view/(?P<message_id>[\d]+)/$', MessageView.as_view(), name='view'),
-    url(r'^view/t/(?P<thread_id>[\d]+)/$', ConversationView.as_view(), name='view_conversation'),
-    url(r'^archive/$', ArchiveView.as_view(), name='archive'),
-    url(r'^delete/$', DeleteView.as_view(), name='delete'),
-    url(r'^undelete/$', UndeleteView.as_view(), name='undelete'),
+    url(r"^sent/(?:(?P<option>" + OPTIONS + ")/)?$", SentView.as_view(), name="sent"),
+    url(
+        r"^archives/(?:(?P<option>" + OPTIONS + ")/)?$",
+        ArchivesView.as_view(),
+        name="archives",
+    ),
+    url(
+        r"^trash/(?:(?P<option>" + OPTIONS + ")/)?$", TrashView.as_view(), name="trash"
+    ),
+    url(r"^write/(?:(?P<recipients>[^/#]+)/)?$", WriteView.as_view(), name="write"),
+    url(r"^reply/(?P<message_id>[\d]+)/$", ReplyView.as_view(), name="reply"),
+    url(r"^view/(?P<message_id>[\d]+)/$", MessageView.as_view(), name="view"),
+    url(
+        r"^view/t/(?P<thread_id>[\d]+)/$",
+        ConversationView.as_view(),
+        name="view_conversation",
+    ),
+    url(r"^archive/$", ArchiveView.as_view(), name="archive"),
+    url(r"^delete/$", DeleteView.as_view(), name="delete"),
+    url(r"^undelete/$", UndeleteView.as_view(), name="undelete"),
     # custom api urls
-    url(r'^api/inbox/', InboxAPIView.as_view({'get': 'list'}), name='inbox_api'),
-    url(r'^api/reply/(?P<message_id>[\d]+)/$', ReplyAPIView.as_view({'post': 'create'}), name='reply_api'),
-    url(r'^api/thread/(?P<thread_id>[\d]+)/$', ConversationAPIView.as_view({'get': 'list'}), name='conversation_thread'),
-    url(r'^api/write/', WriteAPIView.as_view({'post': 'create'}), name='write_api'),
-
-    url(r'^inbox/(?:(?P<option>'+OPTIONS+')/)?$', InboxView.as_view(), name='inbox'),
-    url(r'^$', RedirectView.as_view(url='inbox/', permanent=True)),
+    url(r"^api/inbox/", InboxAPIView.as_view({"get": "list"}), name="inbox_api"),
+    url(
+        r"^api/reply/(?P<message_id>[\d]+)/$",
+        ReplyAPIView.as_view({"post": "create"}),
+        name="reply_api",
+    ),
+    url(
+        r"^api/thread/(?P<thread_id>[\d]+)/$",
+        ConversationAPIView.as_view({"get": "list"}),
+        name="conversation_thread",
+    ),
+    url(r"^api/write/", WriteAPIView.as_view({"post": "create"}), name="write_api"),
+    url(
+        r"^inbox/(?:(?P<option>" + OPTIONS + ")/)?$", InboxView.as_view(), name="inbox"
+    ),
+    url(r"^$", RedirectView.as_view(url="inbox/", permanent=True)),
 ]

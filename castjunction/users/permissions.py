@@ -27,8 +27,9 @@ class IsCastingDirector(permissions.BasePermission):
 
 class IsSupportGroupMember(permissions.BasePermission):
     """Check if user is from support group or not."""
+
     def has_permission(self, request, view):
         """Check for permissions."""
-        if request.user.groups.filter(name='Support').exists():
+        if request.user.groups.filter(name="Support").exists():
             return True
         return False

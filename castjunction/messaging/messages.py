@@ -17,4 +17,6 @@ PROFILE_VIEWED = "Your Profile was recently viewed."
 
 POSTMAN_REPLY_MESSAGE = "{username} just replied to your message!"
 
-EMAIL_PASSWORD_LINE = "For accessing the account, please use the following password : {password}"
+EMAIL_PASSWORD_LINE = (
+    "For accessing the account, please use the following password : {password}"
+)

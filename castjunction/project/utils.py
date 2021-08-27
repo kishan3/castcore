@@ -11,4 +11,5 @@ states_for_popular_jobs = [
     State.ACCEPTED,
     State.REJECTED,
     State.ONHOLD,
-    State.JOBCLOSED]
+    State.JOBCLOSED,
+]

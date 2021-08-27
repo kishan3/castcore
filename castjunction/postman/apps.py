@@ -6,10 +6,11 @@ from django.apps import AppConfig
 
 
 class PostmanConfig(AppConfig):
-    name = 'postman'
+    name = "postman"
 
     def ready(self):
         from .models import setup
         from actstream import registry
-        registry.register(self.get_model('Message'))
+
+        registry.register(self.get_model("Message"))
         setup()

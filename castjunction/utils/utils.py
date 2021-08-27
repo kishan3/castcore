@@ -17,8 +17,13 @@ from pinax.referrals.models import Referral
 
 VIDEO_THUMBNAIL_GENERATOR = "ffmpeg -ss 1 -i {0} -frames:v 1 {1}/thumb%02d.jpg"
 
-VALID_ACTIONS = ["RESPONDED", "STAGE_ROUTE_UNPAID", "STAGE_ROUTE_PAID",
-                 "CASTING_DIRECTOR_UNPAID", "CASTING_DIRECOR_PAID"]
+VALID_ACTIONS = [
+    "RESPONDED",
+    "STAGE_ROUTE_UNPAID",
+    "STAGE_ROUTE_PAID",
+    "CASTING_DIRECTOR_UNPAID",
+    "CASTING_DIRECOR_PAID",
+]
 
 
 class ChoicesField(serializers.Field):
@@ -38,7 +43,9 @@ class ChoicesField(serializers.Field):
         for i in self._choices:
             if self._choices[i] == data:
                 return i
-        raise serializers.ValidationError("Acceptable values are {0}.".format(list(self._choices.values())))
+        raise serializers.ValidationError(
+            "Acceptable values are {0}.".format(list(self._choices.values()))
+        )
 
 
 def create_referral(user):
@@ -48,7 +55,7 @@ def create_referral(user):
 
 def get_referrer_user(request, user=None):
     """Get referrer user."""
-    code = request.data.get('referral_code')
+    code = request.data.get("referral_code")
     action = request.data.get("medium")
     if action and action not in VALID_ACTIONS:
         action = "RESPONDED"
@@ -81,26 +88,31 @@ def check_person_information(user):
         "educations": True,
         "experiences": True,
         "images": False,
-        "videos": True
+        "videos": True,
     }
     if user.skills.count() > 0:
-        result['skills'] = True
+        result["skills"] = True
     if user.known_languages.count() > 0:
-        result['known_languages'] = True
+        result["known_languages"] = True
     if user.images.count() > 0:
-        result['images'] = True
+        result["images"] = True
     try:
         user.bio
-        bio_fields = ['hair_color', 'eye_color',
-                      'height', 'waist', 'shoulders',
-                      'shoe_size']
+        bio_fields = [
+            "hair_color",
+            "eye_color",
+            "height",
+            "waist",
+            "shoulders",
+            "shoe_size",
+        ]
 
         for field in bio_fields:
             if not getattr(user.bio, field):
-                result['bio'] = False
+                result["bio"] = False
                 break
     except Bio.DoesNotExist:
-        result['bio'] = False
+        result["bio"] = False
 
     return result
 
@@ -109,7 +121,7 @@ def last_day_of_month(date):
     """Return last date of input date's month."""
     if date.month == 12:
         return date.replace(day=31)
-    return date.replace(month=date.month+1, day=1) - timedelta(days=1)
+    return date.replace(month=date.month + 1, day=1) - timedelta(days=1)
 
 
 def string_to_date(date_string):
@@ -122,15 +134,20 @@ def string_to_date(date_string):
 
 def group_required(group_names):
     """group_name will be the list of group name."""
+
     def decorator(func):
         @wraps(func, assigned=available_attrs(func))
         def inner(request, *args, **kwargs):
             user = request.user
             if user.is_authenticated():
-                if (user.groups.filter(name__in=group_names) and user.is_staff) or user.is_superuser:
+                if (
+                    user.groups.filter(name__in=group_names) and user.is_staff
+                ) or user.is_superuser:
                     return func(request, *args, **kwargs)
-                return redirect_to_login('/admin/')
+                return redirect_to_login("/admin/")
+
         return inner
+
     return decorator
 
 
@@ -150,8 +167,9 @@ def dump(qs, outfile_path):
 
     """
     import csv
+
     model = qs.model
-    writer = csv.writer(open(outfile_path, 'w'))
+    writer = csv.writer(open(outfile_path, "w"))
 
     headers = []
     for field in model._meta.fields:

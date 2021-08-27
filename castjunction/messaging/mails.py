@@ -33,22 +33,33 @@ class EmailNotification(Notification):
     cc = None
     bcc = None
 
-    def __init__(self, receiver, sender=None, is_template=False, body_template_path=None, subject_template_path=None, *args, **kwargs):
+    def __init__(
+        self,
+        receiver,
+        sender=None,
+        is_template=False,
+        body_template_path=None,
+        subject_template_path=None,
+        *args,
+        **kwargs
+    ):
         """Initialize required attributes for sending out mail."""
         if sender is None:
-            sender = getattr(django_settings, 'STAGEROUTE_EMAIL', None)
+            sender = getattr(django_settings, "STAGEROUTE_EMAIL", None)
         if sender is None or receiver is None:
             raise ValueError("Email sender and recipient required.")
 
-        kwargs['context'] = self._set_default_email_context(kwargs.pop('context', {}))
+        kwargs["context"] = self._set_default_email_context(kwargs.pop("context", {}))
         if is_template:
-            kwargs['body'], kwargs['subject'] = self._create_from_template(kwargs['context'])
+            kwargs["body"], kwargs["subject"] = self._create_from_template(
+                kwargs["context"]
+            )
         super().__init__(*args, **kwargs)
         self.sender = sender
-        if kwargs.get('cc'):
-            self.cc = kwargs.get('cc')
-        if kwargs.get('bcc'):
-            self.bcc = kwargs.get('bcc')
+        if kwargs.get("cc"):
+            self.cc = kwargs.get("cc")
+        if kwargs.get("bcc"):
+            self.bcc = kwargs.get("bcc")
         if not isinstance(receiver, list):
             receiver = [receiver]
         self.receivers = receiver
@@ -58,27 +69,36 @@ class EmailNotification(Notification):
             raise ValueError("Template paths have not been specified.")
         body = loader.render_to_string(self.body_template_path, context)
         subject = loader.render_to_string(self.subject_template_path, context)
-        subject = ''.join(subject.splitlines())
+        subject = "".join(subject.splitlines())
 
         return body, subject
 
     def send(self):
         """Send out mail using the send_mail task."""
-        send_mail.delay(self.subject, self.body, self.sender, self.receivers,
-                        self.cc, self.bcc, content_type='html',
-                        class_name=self.__class__.__name__)
+        send_mail.delay(
+            self.subject,
+            self.body,
+            self.sender,
+            self.receivers,
+            self.cc,
+            self.bcc,
+            content_type="html",
+            class_name=self.__class__.__name__,
+        )
 
     def _set_default_email_context(self, context):
-        context['assessment_site_name'] = getattr(django_settings, 'EMAIL_ASSESSMENT_SITE_NAME', None)
-        context['MEDIA_URL'] = getattr(django_settings, 'MEDIA_URL', None)
+        context["assessment_site_name"] = getattr(
+            django_settings, "EMAIL_ASSESSMENT_SITE_NAME", None
+        )
+        context["MEDIA_URL"] = getattr(django_settings, "MEDIA_URL", None)
         return context
 
 
 class WelcomeEmailNotification(EmailNotification):
     """Email notification for sending out reset password link to user."""
 
-    body_template_path = 'email/welcome_email_body.html'
-    subject_template_path = 'email/welcome_email_subject.txt'
+    body_template_path = "email/welcome_email_body.html"
+    subject_template_path = "email/welcome_email_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -88,8 +108,8 @@ class WelcomeEmailNotification(EmailNotification):
 class ResetPasswordEmailNotification(EmailNotification):
     """Email notification for sending out reset password link to user."""
 
-    body_template_path = 'email/password_reset_email_body.html'
-    subject_template_path = 'email/password_reset_email_subject.txt'
+    body_template_path = "email/password_reset_email_body.html"
+    subject_template_path = "email/password_reset_email_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -99,8 +119,8 @@ class ResetPasswordEmailNotification(EmailNotification):
 class ReferralInvitationEmailNotification(EmailNotification):
     """Email notification for sending out referral invitations to users."""
 
-    body_template_path = 'email/referral_invitation_body.html'
-    subject_template_path = 'email/referral_invitation_subject.txt'
+    body_template_path = "email/referral_invitation_body.html"
+    subject_template_path = "email/referral_invitation_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -110,8 +130,8 @@ class ReferralInvitationEmailNotification(EmailNotification):
 class JobInviteEmailNotification(EmailNotification):
     """Email notification for job invitation."""
 
-    body_template_path = 'email/job_invited_email_body.html'
-    subject_template_path = 'email/job_invited_email_subject.txt'
+    body_template_path = "email/job_invited_email_body.html"
+    subject_template_path = "email/job_invited_email_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -119,8 +139,8 @@ class JobInviteEmailNotification(EmailNotification):
 
 
 class JobShortlistedEmailNotification(EmailNotification):
-    body_template_path = 'email/job_shortlisted_email_body.html'
-    subject_template_path = 'email/job_shortlisted_email_subject.txt'
+    body_template_path = "email/job_shortlisted_email_body.html"
+    subject_template_path = "email/job_shortlisted_email_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -128,8 +148,8 @@ class JobShortlistedEmailNotification(EmailNotification):
 
 
 class ProfileViewedEmailNotification(EmailNotification):
-    body_template_path = 'email/profile_viewed_email_body.html'
-    subject_template_path = 'email/profile_viewed_email_subject.txt'
+    body_template_path = "email/profile_viewed_email_body.html"
+    subject_template_path = "email/profile_viewed_email_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -137,8 +157,8 @@ class ProfileViewedEmailNotification(EmailNotification):
 
 
 class JobApprovedEmailNotification(EmailNotification):
-    body_template_path = 'email/job_approved_email_body.html'
-    subject_template_path = 'email/job_approved_email_subject.txt'
+    body_template_path = "email/job_approved_email_body.html"
+    subject_template_path = "email/job_approved_email_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -148,18 +168,21 @@ class JobApprovedEmailNotification(EmailNotification):
         """Send out mail using the mass_mail task."""
         messages = list()
         for receiver in self.receivers:
-            messages.append([self.subject,
-                             self.body,
-                             self.sender,
-                             [receiver],
-                             ])
+            messages.append(
+                [
+                    self.subject,
+                    self.body,
+                    self.sender,
+                    [receiver],
+                ]
+            )
         tuple_of_messages = tuple(tuple(x) for x in messages)
         send_mass_html_mail(tuple_of_messages, fail_silently=False)
 
 
 class VerifyEmailReminderNotification(EmailNotification):
-    body_template_path = 'email/verify_email_reminder_body.html'
-    subject_template_path = 'email/verify_email_reminder_subject.txt'
+    body_template_path = "email/verify_email_reminder_body.html"
+    subject_template_path = "email/verify_email_reminder_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -169,8 +192,8 @@ class VerifyEmailReminderNotification(EmailNotification):
 class NotifyUser(EmailNotification):
     """A generalised method for different notifications."""
 
-    body_template_path = 'email/notify_user_body.html'
-    subject_template_path = 'email/notify_user_subject.txt'
+    body_template_path = "email/notify_user_body.html"
+    subject_template_path = "email/notify_user_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""
@@ -178,8 +201,8 @@ class NotifyUser(EmailNotification):
 
 
 class ProfileApprovedEmailNotification(EmailNotification):
-    body_template_path = 'email/profile_approved_email_body.html'
-    subject_template_path = 'email/profile_approved_email_subject.txt'
+    body_template_path = "email/profile_approved_email_body.html"
+    subject_template_path = "email/profile_approved_email_subject.txt"
 
     def __init__(self, receiver, sender=None, *args, **kwargs):
         """Initialize the required attributes."""

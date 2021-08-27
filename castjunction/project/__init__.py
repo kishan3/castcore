@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-default_app_config = 'project.apps.ProjectConfig'
+default_app_config = "project.apps.ProjectConfig"

@@ -14,7 +14,10 @@ class ActionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Action
-        exclude = ('actor_content_type', 'target_content_type',)
+        exclude = (
+            "actor_content_type",
+            "target_content_type",
+        )
 
     def get_actor_model_name(self, obj):
         return obj.actor_content_type.name
@@ -33,18 +36,18 @@ class ActionSerializer(serializers.ModelSerializer):
         if obj.actor.first_name:
             actor_name = obj.actor.first_name
         elif obj.actor.email:
-            actor_name = obj.actor.email.split('@')[0]
+            actor_name = obj.actor.email.split("@")[0]
         else:
             actor_name = "User"
         return actor_name
 
     def update(self, instance, validated_data):
-        '''
+        """
         To mark notification as read:
         - Endpoint: {base_url}/notifications/{notification_id}/
         - Request: PATCH
         - unread: False
-        '''
+        """
         allowed_fields = ["public", "unread", "data"]
         for attr, value in validated_data.items():
             if attr in allowed_fields:
